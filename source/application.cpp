@@ -18,10 +18,18 @@ bool Application::initialize()
        return false;
    }
 
-   int windowWidth = m_iniFile.GetInteger("resolution", "width", DEFAULT_WINDOW_WIDTH);
-   int windowHeight = m_iniFile.GetInteger("resolution", "height", DEFAULT_WINDOW_HEIGHT);
+   if (!m_resourceManager.loadResources())
+   {
+       std::cout << "Program can not be launched because some resources can not be loaded!" << std::endl;
+       return false;
+   }
 
-   m_window.create(sf::VideoMode(windowWidth, windowHeight), "MultiSnake");
+   auto windowWidth = m_iniFile.GetInteger("display", "width", DEFAULT_WINDOW_WIDTH);
+   auto windowHeight = m_iniFile.GetInteger("display", "height", DEFAULT_WINDOW_HEIGHT);
+   bool isFullscreen = m_iniFile.GetBoolean("display", "fullscreen", false);
+   auto windowStyle = (isFullscreen) ? sf::Style::Fullscreen : sf::Style::Titlebar | sf::Style::Close;
+
+   m_window.create(sf::VideoMode(windowWidth, windowHeight), "MultiSnake", windowStyle);
 
    return true;
 }
@@ -33,6 +41,18 @@ void Application::run()
         return;
     }
 
+    runGameLoop();
+}
+
+void Application::runGameLoop()
+{
+    sf::Text text;
+    text.setFont(*m_resourceManager.getFont(ResourceManager::FontType::Header).get());
+    text.setString("Hullo");
+    text.setPosition(200, 200);
+    text.setFillColor(sf::Color::White);
+    text.setCharacterSize(60);
+
     while (m_window.isOpen())
     {
         sf::Event event;
@@ -41,6 +61,13 @@ void Application::run()
             if (event.type == sf::Event::Closed)
                 m_window.close();
         }
+
+        m_window.clear(sf::Color::Black);
+        m_window.draw(text);
+
+        m_window.display();
     }
 }
+
+
 

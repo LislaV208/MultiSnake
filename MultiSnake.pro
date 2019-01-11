@@ -4,8 +4,9 @@ CONFIG -= app_bundle
 CONFIG -= qt
 
 SOURCES += \
-        source\main.cpp \
-    source\application.cpp
+    source/main.cpp \
+    source/application.cpp \
+    source/resourcemanager.cpp
 
 INCLUDEPATH += SFML-2.5.1\include
 DEPENDPATH += SFML-2.5.1\include
@@ -18,5 +19,6 @@ CONFIG(debug, debug|release): LIBS += -lsfml-audio-d -lsfml-system-d -lsfml-netw
 CONFIG(release, debug|release): LIBS += -lsfml-audio -lsfml-system -lsfml-network -lsfml-main -lsfml-window -lsfml-graphics
 
 HEADERS += \
-    include\application.h \
-    include/constants.h
+    include/application.h \
+    include/constants.h \
+    include/resourcemanager.h

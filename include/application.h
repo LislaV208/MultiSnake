@@ -4,6 +4,7 @@
 #include <SFML/Graphics.hpp>
 
 #include "inih/INIReader.h"
+#include "resourcemanager.h"
 
 class Application
 {
@@ -14,9 +15,13 @@ public:
 
 private:
     bool initialize();
+    void runGameLoop();
+
     sf::RenderWindow m_window;
 
     INIReader m_iniFile;
+    ResourceManager m_resourceManager;
+
 };
 
 #endif // APPLICATION_H
