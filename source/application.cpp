@@ -4,16 +4,15 @@
 
 #include <iostream>
 
-Application::Application() :
-    m_iniFile("config.ini")
+Application::Application()
 {
 
 }
 
 bool Application::initialize()
 {
-   if (m_iniFile.ParseError() < 0)
-   {
+   if (m_iniFile.LoadFile("config.ini") < 0)
+    {
        std::cout << "'config.ini' can not be loaded!" << std::endl;
        return false;
    }
@@ -24,9 +23,9 @@ bool Application::initialize()
        return false;
    }
 
-   auto windowWidth = m_iniFile.GetInteger("display", "width", DEFAULT_WINDOW_WIDTH);
-   auto windowHeight = m_iniFile.GetInteger("display", "height", DEFAULT_WINDOW_HEIGHT);
-   bool isFullscreen = m_iniFile.GetBoolean("display", "fullscreen", false);
+   auto windowWidth = m_iniFile.GetLongValue("display", "width", DEFAULT_WINDOW_WIDTH);
+   auto windowHeight = m_iniFile.GetLongValue("display", "height", DEFAULT_WINDOW_HEIGHT);
+   bool isFullscreen = m_iniFile.GetBoolValue("display", "fullscreen", false);
    auto windowStyle = (isFullscreen) ? sf::Style::Fullscreen : sf::Style::Titlebar | sf::Style::Close;
 
    m_window.create(sf::VideoMode(windowWidth, windowHeight), "MultiSnake", windowStyle);

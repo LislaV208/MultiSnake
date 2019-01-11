@@ -3,7 +3,7 @@
 
 #include <SFML/Graphics.hpp>
 
-#include "inih/INIReader.h"
+#include "simpleini/SimpleIni.h"
 #include "resourcemanager.h"
 
 class Application
@@ -13,13 +13,13 @@ public:
 
     void run();
 
-private:
+private:    
     bool initialize();
     void runGameLoop();
 
     sf::RenderWindow m_window;
 
-    INIReader m_iniFile;
+    CSimpleIniA m_iniFile;
     ResourceManager m_resourceManager;
 
 };
